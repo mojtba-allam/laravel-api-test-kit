@@ -1,0 +1,18 @@
+# Local config (contains PROJECT_ROOT — do not commit secrets)
+config/test.env
+
+# Dependencies & artifacts
+node_modules/
+test-results/
+playwright-report/
+blob-report/
+
+# OS / editor
+.DS_Store
+*.swp
+.idea/
+.vscode/
+
+# Temp logs
+*.log
+/tmp/
