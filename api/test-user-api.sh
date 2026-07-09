@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Finolo User Module API Test Suite - Enhanced
+# User Module API Test Suite - Enhanced
 # Tests all User, Skills, and User Skills endpoints with comprehensive validation
 
 set -e
@@ -9,7 +9,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/api-test-helpers.sh"
 
 echo "=========================================="
-echo "Finolo User Module API Test Suite - Enhanced"
+echo "User Module API Test Suite - Enhanced"
 echo "=========================================="
 echo ""
 

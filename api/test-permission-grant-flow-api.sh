@@ -23,11 +23,11 @@ echo "===== Permission Grant/Revoke Flow Test Suite ====="
 echo ""
 echo "----- Setup: Authenticating users -----"
 
-OWNER_TOKEN=$(login_as "user-01@finolo.com") || { echo "FATAL: cannot login owner" >&2; exit 1; }
-login_as "user-01@finolo.com" > /dev/null 2>&1; OWNER_USER_ID="$LAST_LOGIN_USER_ID"
+OWNER_TOKEN=$(login_as "$SEED_OWNER_EMAIL") || { echo "FATAL: cannot login owner" >&2; exit 1; }
+login_as "$SEED_OWNER_EMAIL" > /dev/null 2>&1; OWNER_USER_ID="$LAST_LOGIN_USER_ID"
 
-MEMBER_TOKEN=$(login_as "user-03@finolo.com") || { echo "FATAL: cannot login member" >&2; exit 1; }
-login_as "user-03@finolo.com" > /dev/null 2>&1; MEMBER_USER_ID="$LAST_LOGIN_USER_ID"
+MEMBER_TOKEN=$(login_as "$SEED_MEMBER_EMAIL") || { echo "FATAL: cannot login member" >&2; exit 1; }
+login_as "$SEED_MEMBER_EMAIL" > /dev/null 2>&1; MEMBER_USER_ID="$LAST_LOGIN_USER_ID"
 
 echo "  Owner  ID: $OWNER_USER_ID"
 echo "  Member ID: $MEMBER_USER_ID"

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Finolo JSON Import/Export API Test Suite
+# JSON Import/Export API Test Suite
 # Covers all three levels (project / section / column) for happy paths,
 # round-trip export→import, and bad scenarios.
 

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Finolo Activity Module API Test Suite - Enhanced
+# Activity Module API Test Suite - Enhanced
 # Tests all Activity endpoints with comprehensive validation
 
 set -e

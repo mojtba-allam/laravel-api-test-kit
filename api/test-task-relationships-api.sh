@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Finolo Task Relationships API Test Suite - Enhanced
+# Task Relationships API Test Suite - Enhanced
 # Comprehensive relationship testing with validation, DB verification, and business logic
 
 set -e

@@ -16,23 +16,23 @@ echo ""
 # -------------------------------------------------------
 # 1. Capture tokens for all relevant actors
 # -------------------------------------------------------
-ADMIN_TOKEN=$(login_as "admin@finolo.com")   || { echo "ERROR: could not login as admin" >&2; exit 1; }
-OWNER_TOKEN=$(login_as "user-01@finolo.com") || { echo "ERROR: could not login as user-01" >&2; exit 1; }
-MEMBER_TOKEN=$(login_as "user-03@finolo.com") || { echo "ERROR: could not login as user-03" >&2; exit 1; }
-AUTHOR_TOKEN=$(login_as "user-04@finolo.com") || { echo "ERROR: could not login as user-04" >&2; exit 1; }
+ADMIN_TOKEN=$(login_as "$SEED_ADMIN_EMAIL")   || { echo "ERROR: could not login as admin" >&2; exit 1; }
+OWNER_TOKEN=$(login_as "$SEED_OWNER_EMAIL") || { echo "ERROR: could not login as user-01" >&2; exit 1; }
+MEMBER_TOKEN=$(login_as "$SEED_MEMBER_EMAIL") || { echo "ERROR: could not login as user-03" >&2; exit 1; }
+AUTHOR_TOKEN=$(login_as "$SEED_AUTHOR_EMAIL") || { echo "ERROR: could not login as user-04" >&2; exit 1; }
 
 # Capture user IDs for member-add step
 act_as "$OWNER_TOKEN"
 OWNER_LOGIN_ID=""
-login_as "user-01@finolo.com" > /dev/null 2>&1 || true
+login_as "$SEED_OWNER_EMAIL" > /dev/null 2>&1 || true
 OWNER_LOGIN_ID="$LAST_LOGIN_USER_ID"
 
 # Re-login as user-03 to capture user ID
-login_as "user-03@finolo.com" > /dev/null 2>&1 || true
+login_as "$SEED_MEMBER_EMAIL" > /dev/null 2>&1 || true
 MEMBER_USER_ID="$LAST_LOGIN_USER_ID"
 
 # Re-login as user-04 to capture user ID
-login_as "user-04@finolo.com" > /dev/null 2>&1 || true
+login_as "$SEED_AUTHOR_EMAIL" > /dev/null 2>&1 || true
 AUTHOR_USER_ID="$LAST_LOGIN_USER_ID"
 
 # -------------------------------------------------------

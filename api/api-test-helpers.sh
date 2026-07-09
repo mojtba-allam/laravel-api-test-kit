@@ -647,7 +647,7 @@ print_summary_and_exit() {
 # Generic login helper. Returns a non-empty token string on stdout, or
 # returns non-zero (and logs to stderr) when a token could not be obtained.
 # Mints a Sanctum token directly (find-or-create verified user) so it works
-# for both seeded users (e.g. admin@finolo.com) and fresh identities, without
+# for both seeded users (e.g. admin@test.local) and fresh identities, without
 # depending on passwords or the email-verification HTTP flow.
 login_as() {
     local email="$1"
@@ -666,22 +666,25 @@ login_as() {
 # api_get / api_json / api_delete.
 act_as() { TOKEN="$1"; }
 
-# Direct member addition for test fixture setup (Finolo adapter).
-# Override ADD_MEMBER_SCRIPT in config/test.env for other apps.
+# Direct member addition for test fixture setup (optional).
+# Set ADD_MEMBER_SCRIPT in config/test.env to a PHP script: add-member.php <project_id> <user_id>
 add_member_direct() {
     local project_id="$1"
     local user_id="$2"
     local script="${ADD_MEMBER_SCRIPT:-}"
 
-    if [ -n "$script" ] && [ -f "$script" ]; then
-        PROJECT_ROOT="$PROJECT_ROOT" "$PHP_BIN" "$script" "$project_id" "$user_id" > /dev/null 2>&1
-        return
+    if [ -z "$script" ]; then
+        echo -e "${YELLOW}add_member_direct: ADD_MEMBER_SCRIPT not configured — skipping${NC}" >&2
+        return 0
     fi
 
-    # Finolo default
-    "$PHP_BIN" "$PROJECT_ROOT/artisan" tinker --execute="
-        app(Modules\Project\Services\ProjectService::class)->ensureMember('$project_id', '$user_id');
-    " > /dev/null 2>&1
+    if [[ "$script" != /* ]]; then
+        script="$TEST_KIT_ROOT/$script"
+    fi
+
+    if [ -f "$script" ]; then
+        PROJECT_ROOT="$PROJECT_ROOT" "$PHP_BIN" "$script" "$project_id" "$user_id" > /dev/null 2>&1
+    fi
 }
 
 # expected_gap and skip_case helpers (no pass/fail increment)

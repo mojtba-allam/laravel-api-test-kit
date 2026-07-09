@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Finolo Task Custom Fields API Test Suite - Enhanced
+# Task Custom Fields API Test Suite - Enhanced
 # Phase 9: Comprehensive custom fields testing with validation, DB verification, and business logic
 
 set -e

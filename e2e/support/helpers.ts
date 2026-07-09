@@ -384,7 +384,7 @@ export async function uploadAttachment(
       file: {
         name: fileName,
         mimeType: 'text/plain',
-        buffer: Buffer.from('Finolo E2E attachment contents.'),
+        buffer: Buffer.from('E2E attachment contents.'),
       },
     },
   })

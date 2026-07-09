@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Finolo Notification Module API Test Suite - Enhanced
+# Notification Module API Test Suite - Enhanced
 # Tests all Notification endpoints with comprehensive validation
 
 set -e

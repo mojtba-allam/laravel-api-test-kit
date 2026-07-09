@@ -10,14 +10,8 @@ echo "Laravel API Test Kit — setup"
 echo "============================"
 
 if [ ! -f config/test.env ]; then
-  if [ -f config/finolo.env.example ]; then
-    echo "Creating config/test.env from finolo.env.example..."
-    cp config/finolo.env.example config/test.env
-    echo "  → Edit config/test.env and set PROJECT_ROOT"
-  else
-    cp config/test.env.example config/test.env
-    echo "  → Edit config/test.env and set PROJECT_ROOT"
-  fi
+  cp config/test.env.example config/test.env
+  echo "Created config/test.env — edit PROJECT_ROOT before running tests"
 else
   echo "config/test.env already exists"
 fi

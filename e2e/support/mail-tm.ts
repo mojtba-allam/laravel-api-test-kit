@@ -22,7 +22,7 @@ export async function createMailTmInbox(): Promise<MailTmInbox> {
   const domainsBody = await domainsRes.json()
   const domain = domainsBody['hydra:member'][0].domain
 
-  const address = `finolo-e2e-${Date.now()}-${Math.random().toString(36).slice(2, 8)}@${domain}`
+  const address = `e2e-${Date.now()}-${Math.random().toString(36).slice(2, 8)}@${domain}`
   const password = 'TestMailTm@2026'
 
   // Create account (with retry)

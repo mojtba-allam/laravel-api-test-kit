@@ -4,9 +4,9 @@
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/api-test-helpers.sh"
 
-export BASE_URL="https://finolo.ir/api/v1"
+export BASE_URL="https://example.com/api/v1"
 
-echo "===== Remote Permission Test — finolo.ir ====="
+echo "===== Remote Permission Test — example.com ====="
 echo ""
 
 # Login as owner

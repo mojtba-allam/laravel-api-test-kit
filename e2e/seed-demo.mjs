@@ -9,8 +9,8 @@
 
 const BASE = process.env.BASE_URL ?? 'http://127.0.0.1:8000'
 
-const USER_A = { name: 'Demo User A', email: 'demo-a@finolo.test', password: 'Demo12345!' }
-const USER_B = { name: 'Demo User B', email: 'demo-b@finolo.test', password: 'Demo12345!' }
+const USER_A = { name: 'Demo User A', email: 'demo-a@test.example.com', password: 'Demo12345!' }
+const USER_B = { name: 'Demo User B', email: 'demo-b@test.example.com', password: 'Demo12345!' }
 
 async function api(path, { token, method = 'GET', body, form } = {}) {
   const headers = { Accept: 'application/json' }

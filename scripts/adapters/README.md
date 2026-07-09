@@ -6,8 +6,8 @@ The test kit authenticates without driving fragile UI/email flows by default. An
 
 | Adapter | Path | Use when |
 |---------|------|----------|
-| Finolo | `finolo/mint-token.php` | Finolo modular Laravel app |
-| Generic template | `generic/mint-token.php` | Starting point for any Sanctum app |
+| Generic | `generic/mint-token.php` | Standard Laravel + `App\Models\User` |
+| Laravel modules | `laravel-modules/mint-token.php` | Modular apps (`Modules\User\Models\User`, etc.) |
 
 ## Create your adapter
 
@@ -18,7 +18,7 @@ The test kit authenticates without driving fragile UI/email flows by default. An
 ## CLI
 
 ```bash
-PROJECT_ROOT=/path/to/app php scripts/adapters/finolo/mint-token.php \
+PROJECT_ROOT=/path/to/app php scripts/adapters/generic/mint-token.php \
   --email=qa@example.com --admin --json
 ```
 

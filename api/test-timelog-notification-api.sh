@@ -15,7 +15,7 @@ print_result() {
 json_value() { echo "$1" | grep -o "\"$2\":[^,}]*" | sed 's/"[^"]*"://;s/"//g;s/}//g' | head -1; }
 
 echo "=========================================="; echo "TimeLog & Notification API Tests"; echo "=========================================="
-LOGIN_RESPONSE=$(curl -sk -w "\n%{http_code}" -X POST "$BASE_URL/auth/login" -H "Content-Type: application/json" -d '{"email": "admin@finolo.com", "password": "password"}')
+LOGIN_RESPONSE=$(curl -sk -w "\n%{http_code}" -X POST "$BASE_URL/auth/login" -H "Content-Type: application/json" -d '{"email": "$SEED_ADMIN_EMAIL", "password": "password"}')
 TOKEN=$(json_value "$(echo "$LOGIN_RESPONSE" | sed '$d')" "token")
 USER_ID=$(json_value "$(echo "$LOGIN_RESPONSE" | sed '$d')" "id")
 echo "✓ Auth token obtained"; echo ""

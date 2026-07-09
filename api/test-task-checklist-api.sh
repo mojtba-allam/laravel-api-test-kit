@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Finolo Task Checklist API Test Suite - Enhanced
+# Task Checklist API Test Suite - Enhanced
 # Phase 8: Comprehensive checklist testing with validation, DB verification, and business logic
 
 set -e

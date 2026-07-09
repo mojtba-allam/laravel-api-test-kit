@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Finolo Task Recurring API Test Suite - Enhanced
+# Task Recurring API Test Suite - Enhanced
 # Phase 11: Comprehensive recurring task testing with validation, DB verification, and business logic
 
 set -e

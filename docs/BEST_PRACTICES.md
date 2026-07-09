@@ -136,6 +136,6 @@ npx playwright show-report
 - [ ] `JSON_ID_PATH` matches API resources
 - [ ] `create_*` helpers match your hierarchy
 - [ ] TestingSeeder with policy users
-- [ ] Trim irrelevant Finolo suites from `run-all-api-tests.sh`
+- [ ] Trim irrelevant suites from `run-all-api-tests.sh`
 - [ ] Update E2E login selectors and home URL
 - [ ] Add your modules as new `test-*.sh` files

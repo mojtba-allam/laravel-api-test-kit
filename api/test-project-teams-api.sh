@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Finolo Project Teams API Test Suite - Enhanced
+# Project Teams API Test Suite - Enhanced
 # Phase 4.5: Comprehensive project teams testing with validation, DB verification, and business logic
 
 set -e

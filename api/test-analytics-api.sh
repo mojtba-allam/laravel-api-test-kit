@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Finolo Analytics Module API Test Suite - Enhanced
+# Analytics Module API Test Suite - Enhanced
 # Tests all Analytics endpoints with comprehensive validation
 
 set -e

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Finolo Task Hierarchy API Test Suite - Enhanced
+# Task Hierarchy API Test Suite - Enhanced
 # Phase 7: Comprehensive hierarchy testing with validation, DB verification, and business logic
 
 set -e

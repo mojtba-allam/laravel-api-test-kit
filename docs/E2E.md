@@ -113,4 +113,4 @@ Follow accessibility-first selectors:
 1. Update login/register field selectors in `auth.ts`
 2. Update post-login URL regex (`/dashboard` → your home route)
 3. Update `helpers.ts` API payloads to match your validation rules
-4. Remove Finolo-specific specs you don't need
+4. Remove App-specific specs you don't need

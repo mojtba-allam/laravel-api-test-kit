@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Finolo Analytics Export API Test Suite
+# Analytics Export API Test Suite
 #
 # Verifies the server-side Excel export endpoint
 #   GET /api/v1/analytics/export
@@ -29,7 +29,7 @@ EXPORT_URL="$BASE_URL/analytics/export"
 STREAM_URL="$BASE_URL/analytics/stream"
 
 XLSX_ACCEPT="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-OUT_DIR="${OUT_DIR:-/tmp/finolo-analytics-export}"
+OUT_DIR="${OUT_DIR:-/tmp/api-test-analytics-export}"
 mkdir -p "$OUT_DIR"
 
 echo "=========================================="

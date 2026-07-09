@@ -7,7 +7,7 @@ set -e
 
 BASE_URL="${BASE_URL:-https://127.0.0.1}"
 PHP_BIN="${PHP_BIN:-/usr/local/php82/bin/php}"
-APP_DIR="${APP_DIR:-/home/admin/domains/finolo.ir}"
+APP_DIR="${APP_DIR:-/home/admin/domains/example.com}"
 PASS=0
 FAIL=0
 
@@ -20,7 +20,7 @@ assert_status() {
     else red "$name (expected $expected, got $actual)"; FAIL=$((FAIL+1)); fi
 }
 
-EMAIL="flow-test-$(date +%s)-$RANDOM@finolo.test"
+EMAIL="flow-test-$(date +%s)-$RANDOM@test.example.com"
 PASSWORD="StrongPass123!"
 
 echo "=========================================="

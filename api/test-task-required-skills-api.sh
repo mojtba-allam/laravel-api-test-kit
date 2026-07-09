@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Finolo Task Required Skills API Test Suite
+# Task Required Skills API Test Suite
 # Tests all Task Required Skills endpoints with real database records
 
 set -e

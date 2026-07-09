@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Finolo Workspace Module API Test Suite - Enhanced
+# Workspace Module API Test Suite - Enhanced
 
 set -e
 

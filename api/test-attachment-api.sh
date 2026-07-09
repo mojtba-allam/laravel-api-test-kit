@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Finolo Attachment API Test Suite - Enhanced
+# Attachment API Test Suite - Enhanced
 # Phase 21: Comprehensive attachment testing with validation, DB verification, and business logic
 
 set -e
@@ -47,7 +47,7 @@ fi
 
 # Upload attachment and validate response
 TEST_FILE="/tmp/test-attachment-$$.txt"
-echo "Test attachment content for Finolo API testing" > "$TEST_FILE"
+echo "Test attachment content for API testing" > "$TEST_FILE"
 
 if [ -n "$TASK_ID" ]; then
     RESPONSE=$(api_multipart POST "/attachments" -F "file=@$TEST_FILE" -F "task_id=$TASK_ID")

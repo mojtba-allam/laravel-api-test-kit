@@ -22,15 +22,15 @@ echo "===== Project Roles & Permissions Test Suite ====="
 # ---------------------------------------------------------------------------
 # Identities: OWNER (project admin) = user-01, MEMBER = user-05, SUPER = admin
 # ---------------------------------------------------------------------------
-OWNER_TOKEN=$(login_as "user-01@finolo.com") || { echo "FATAL: owner login"; exit 1; }
-login_as "user-01@finolo.com" >/dev/null 2>&1 || true
+OWNER_TOKEN=$(login_as "$SEED_OWNER_EMAIL") || { echo "FATAL: owner login"; exit 1; }
+login_as "$SEED_OWNER_EMAIL" >/dev/null 2>&1 || true
 OWNER_ID="$LAST_LOGIN_USER_ID"
 
-MEMBER_TOKEN=$(login_as "user-05@finolo.com") || { echo "FATAL: member login"; exit 1; }
-login_as "user-05@finolo.com" >/dev/null 2>&1 || true
+MEMBER_TOKEN=$(login_as "$SEED_OTHER_EMAIL") || { echo "FATAL: member login"; exit 1; }
+login_as "$SEED_OTHER_EMAIL" >/dev/null 2>&1 || true
 MEMBER_ID="$LAST_LOGIN_USER_ID"
 
-SUPER_TOKEN=$(login_as "admin@finolo.com") || { echo "FATAL: admin login"; exit 1; }
+SUPER_TOKEN=$(login_as "$SEED_ADMIN_EMAIL") || { echo "FATAL: admin login"; exit 1; }
 
 unique="$(date +%s)-$RANDOM"
 

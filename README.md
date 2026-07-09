@@ -1,8 +1,8 @@
-# Laravel API Test Kit
+# Portable Laravel API & E2E Test Kit
 
-Portable, production-style test suite for Laravel REST APIs. Covers **every endpoint action** with real HTTP requests, multi-step **A→B→C workflow** tests, **policy/authorization** matrices, **Playwright E2E** flows, and **k6** performance checks.
+Production-style test suite for **any** Laravel REST API. Covers endpoint CRUD, multi-step **A→B→C workflow** chains, **policy/authorization** matrices, **Playwright E2E** flows, and **k6** performance checks.
 
-Originally built for [Finolo](https://github.com/mojtba-allam/finolo); structured so you can point it at any Laravel + Sanctum project.
+Point `PROJECT_ROOT` at your app, customize an auth adapter, and run.
 
 ## What's included
 
@@ -42,13 +42,6 @@ npx playwright install chromium
 npx playwright test
 ```
 
-Or use the Finolo preset:
-
-```bash
-cp config/finolo.env.example config/test.env
-# Adjust PROJECT_ROOT if needed
-```
-
 ## Documentation
 
 - [Getting Started](docs/GETTING_STARTED.md) — install, configure, first run
@@ -77,13 +70,12 @@ laravel-api-test-kit/
 │   └── test-*.sh
 ├── config/
 │   ├── bootstrap.sh        # loads test.env
-│   ├── test.env.example
-│   └── finolo.env.example
+│   └── test.env.example
 ├── e2e/                    # Playwright specs + support/
 ├── performance/            # k6 scripts
 ├── scripts/
 │   ├── setup-project.sh
-│   └── adapters/           # mint-token per project
+│   └── adapters/           # mint-token per project type
 └── docs/
 ```
 

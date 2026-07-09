@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Finolo Notifications Feed API Test Suite
+# Notifications Feed API Test Suite
 # Tests all Notification Feed endpoints: list, filter, unread-count, mark-read,
 # mark-unread, mark-all-read, and delete.
 # Requirements: 18.1, 18.2, 18.3, 18.4

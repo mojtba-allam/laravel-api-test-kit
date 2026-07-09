@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Finolo Simple Modules API Test Suite - Enhanced
+# Simple Modules API Test Suite - Enhanced
 # Phase 22: Comprehensive testing for Tags, Comments, and other simple modules
 
 set -e

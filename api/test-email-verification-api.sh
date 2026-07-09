@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Finolo Email Verification API Test Suite
+# Email Verification API Test Suite
 # Tests complete signup flow with email verification
 # Uses MAIL_MAILER=log to capture verification codes from log output
 

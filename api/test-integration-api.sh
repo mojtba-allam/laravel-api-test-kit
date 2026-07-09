@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Finolo Integration (CI/CD) API Test Suite
+# Integration (CI/CD) API Test Suite
 # Tests CRUD for integrations, provider listing, test connection, and runs endpoints.
 
 set -e

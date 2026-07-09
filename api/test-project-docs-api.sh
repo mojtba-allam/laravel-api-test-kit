@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Finolo Project Docs API Test Suite
+# Project Docs API Test Suite
 
 set -e
 
@@ -12,10 +12,10 @@ echo "Project Docs API Test Suite"
 echo "=========================================="
 echo ""
 
-mint_token_for "project-docs-api@test.finolo.local"
+mint_token_for "project-docs-api@test.example.com"
 TOKEN="$MINTED_TOKEN"
 USER_ID="$MINTED_USER_ID"
-echo "✓ Auth token obtained (test user: project-docs-api@test.finolo.local)"
+echo "✓ Auth token obtained (test user: project-docs-api@test.example.com)"
 echo ""
 
 create_workspace "$(date +%s)"
@@ -74,7 +74,7 @@ fi
 
 echo ""
 echo "--- 403 upload without permission (non-member) ---"
-mint_token_for "project-docs-stranger-$(date +%s)@test.finolo.local"
+mint_token_for "project-docs-stranger-$(date +%s)@test.example.com"
 STRANGER_TOKEN="$MINTED_TOKEN"
 TOKEN="$STRANGER_TOKEN"
 DENY_FILE="/tmp/project-doc-deny-$$.txt"
@@ -82,7 +82,7 @@ echo "denied" > "$DENY_FILE"
 RESPONSE=$(api_multipart POST "/projects/$PROJECT_ID/docs" -F "file=@$DENY_FILE" -F "category=general")
 assert_api "POST /api/v1/projects/{id}/docs as non-member → 403" "403" "$RESPONSE"
 rm -f "$DENY_FILE"
-mint_token_for "project-docs-api@test.finolo.local"
+mint_token_for "project-docs-api@test.example.com"
 TOKEN="$MINTED_TOKEN"
 
 echo ""

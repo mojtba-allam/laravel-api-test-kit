@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Finolo Webhook API Test Suite - Enhanced
+# Webhook API Test Suite - Enhanced
 # Phase 18: Comprehensive webhook testing with validation, DB verification, and business logic
 
 set -e

@@ -29,8 +29,6 @@ TEST_EMAIL_DOMAIN=test.yourapp.local
 MINT_TOKEN_SCRIPT=scripts/adapters/generic/mint-token.php
 ```
 
-For Finolo, use `config/finolo.env.example` instead.
-
 ## 2. Prepare the Laravel application
 
 ```bash
@@ -103,7 +101,7 @@ All values can live in `config/test.env`:
 | `APP_URL` | derived | Public app URL |
 | `TEST_EMAIL_DOMAIN` | `test.example.com` | Domain for generated emails |
 | `AUTH_STRATEGY` | `mint_token` | `mint_token` or `http_login` |
-| `MINT_TOKEN_SCRIPT` | finolo adapter | Path to token minting script |
+| `MINT_TOKEN_SCRIPT` | generic adapter | Path to token minting script |
 | `JSON_ID_PATH` | `data.id` | Dot path for resource IDs in JSON |
 | `SEED_COMMAND` | `db:seed` | Artisan seed command |
 | `CURL_INSECURE` | `1` | Use `curl -k` for local TLS |
@@ -117,7 +115,7 @@ All values can live in `config/test.env`:
 **401 on all requests** — verify Sanctum is configured; test adapter manually:
 
 ```bash
-PROJECT_ROOT=/path/to/app php scripts/adapters/finolo/mint-token.php --email=qa@test.local --json
+PROJECT_ROOT=/path/to/app php scripts/adapters/generic/mint-token.php --email=qa@test.local --json
 ```
 
 **Policy tests fail** — ensure seeders created users listed in `SEED_*_EMAIL` variables.

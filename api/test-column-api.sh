@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Finolo Column & Section API Test Suite - Enhanced
+# Column & Section API Test Suite - Enhanced
 # Phase 12: Comprehensive column/section testing with validation, DB verification, and business logic
 
 set -e

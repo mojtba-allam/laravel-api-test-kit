@@ -8,7 +8,7 @@
 declare(strict_types=1);
 
 $kitRoot = dirname(__DIR__, 2);
-$adapter = $kitRoot.'/scripts/adapters/finolo/mint-token.php';
+$adapter = $kitRoot.'/scripts/adapters/generic/mint-token.php';
 
 if (is_file($kitRoot.'/config/test.env')) {
     foreach (file($kitRoot.'/config/test.env', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) as $line) {

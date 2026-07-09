@@ -1,14 +1,14 @@
 #!/bin/bash
 
 # =============================================================================
-# Finolo Notifications Cross-User API Test Suite
+# Notifications Cross-User API Test Suite
 # =============================================================================
 #
 # Verifies that when User A performs actions across multiple modules, the
 # expected notifications appear in User B's (and User C's) notifications feed.
 #
 # Scenario A → B → C
-#   - User A: seeded admin (admin@finolo.com)
+#   - User A: seeded admin ($SEED_ADMIN_EMAIL)
 #   - User B: freshly registered user, added to A's workspace + project as a
 #             member, assignee/watcher of tasks
 #   - User C: freshly registered user, added to A's workspace only
@@ -166,7 +166,7 @@ register_user() {
     local out_email_var="$4"
 
     local stamp="$(date +%s)-$RANDOM"
-    local email="${name_prefix}-${stamp}@finolo.test"
+    local email="${name_prefix}-${stamp}@test.example.com"
     local password="Notif1234!@"
     local laravel_log="$PROJECT_ROOT/storage/logs/laravel.log"
 
@@ -486,7 +486,7 @@ echo ""
 act_as "$TOKEN_A"
 
 # Create a small temp file to upload
-TMP_FILE="$(mktemp /tmp/finolo-notif-XXXXXX.txt)"
+TMP_FILE="$(mktemp /tmp/api-test-notif-XXXXXX.txt)"
 echo "notification test attachment content" > "$TMP_FILE"
 
 RESPONSE=$(api_multipart POST "/attachments/upload" \

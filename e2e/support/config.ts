@@ -45,11 +45,11 @@ export const testConfig = {
   testEmailDomain: env('TEST_EMAIL_DOMAIN', 'test.example.com'),
   mintTokenScript: env(
     'MINT_TOKEN_SCRIPT',
-    'scripts/adapters/finolo/mint-token.php',
+    'scripts/adapters/generic/mint-token.php',
   ),
   pendingRegistrationModel: env(
     'PENDING_REGISTRATION_MODEL',
-    'Modules\\User\\Models\\PendingRegistration',
+    'App\\Models\\PendingRegistration',
   ),
 }
 

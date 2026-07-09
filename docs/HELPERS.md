@@ -90,7 +90,7 @@ Deletes `TASK_ID*`, `COLUMN_ID`, `SECTION_ID`, `PROJECT_ID`, `WORKSPACE_ID`, and
 
 | Function | Description |
 |----------|-------------|
-| `add_member_direct` | Bypass invite flow (Finolo `ProjectService`) |
+| `add_member_direct` | Bypass invite flow (`ProjectService`) |
 | `expected_gap` | Document known deviation (no pass/fail) |
 | `skip_case` | Skip undefined policy ability |
 

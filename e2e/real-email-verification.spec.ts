@@ -8,7 +8,7 @@
  *   3. POST /api/v1/auth/pending/verify { pending_token, code } → creates user, returns { user, token }
  *
  * Run locally:  npx playwright test real-email-verification --project=chromium
- * Run vs prod: PLAYWRIGHT_BASE_URL=https://finolo.ir npx playwright test real-email-verification --project=chromium
+ * Run vs prod: PLAYWRIGHT_BASE_URL=https://example.com npx playwright test real-email-verification --project=chromium
  */
 import { test, expect } from '@playwright/test'
 import {

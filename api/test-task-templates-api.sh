@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Finolo Task Templates API Test Suite - Enhanced
+# Task Templates API Test Suite - Enhanced
 # Phase 10: Comprehensive template testing with validation, DB verification, and business logic
 
 set -e

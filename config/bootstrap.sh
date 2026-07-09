@@ -48,10 +48,18 @@ export API_PREFIX="${API_PREFIX:-/api/v1}"
 export PHP_BIN="${PHP_BIN:-php}"
 export TEST_EMAIL_DOMAIN="${TEST_EMAIL_DOMAIN:-test.example.com}"
 export AUTH_STRATEGY="${AUTH_STRATEGY:-mint_token}"
-export MINT_TOKEN_SCRIPT="${MINT_TOKEN_SCRIPT:-$TEST_KIT_ROOT/scripts/adapters/finolo/mint-token.php}"
+export MINT_TOKEN_SCRIPT="${MINT_TOKEN_SCRIPT:-$TEST_KIT_ROOT/scripts/adapters/generic/mint-token.php}"
 export JSON_ID_PATH="${JSON_ID_PATH:-data.id}"
 export SEED_COMMAND="${SEED_COMMAND:-db:seed}"
 export CURL_INSECURE="${CURL_INSECURE:-1}"
+
+# Seeded users for policy / permission suites (override in config/test.env)
+export SEED_ADMIN_EMAIL="${SEED_ADMIN_EMAIL:-admin@test.local}"
+export SEED_OWNER_EMAIL="${SEED_OWNER_EMAIL:-user-01@test.local}"
+export SEED_CREATOR_EMAIL="${SEED_CREATOR_EMAIL:-user-02@test.local}"
+export SEED_MEMBER_EMAIL="${SEED_MEMBER_EMAIL:-user-03@test.local}"
+export SEED_AUTHOR_EMAIL="${SEED_AUTHOR_EMAIL:-user-04@test.local}"
+export SEED_OTHER_EMAIL="${SEED_OTHER_EMAIL:-user-05@test.local}"
 
 # Curl TLS flag (-k when testing local/self-signed)
 if [ "$CURL_INSECURE" = "1" ]; then

@@ -1,25 +1,27 @@
 <?php
 
 /**
- * Finolo adapter — mint a Sanctum token for API/E2E tests.
+ * Laravel modular app adapter — mint a Sanctum token for API/E2E tests.
+ *
+ * For applications using nwidart/laravel-modules style structure.
+ * Customize model namespaces and role logic for your modules.
  *
  * CLI:
- *   php mint-token.php --email=user@test.finolo.local [--admin]
- *
- * Output markers (for shell parsing):
- *   __UID__{id}__TOK__{token}__END__
- *
- * JSON mode (--json):
- *   {"token":"...","userId":1,"email":"..."}
+ *   php mint-token.php --email=user@test.example.com [--admin] [--json]
  */
 
 declare(strict_types=1);
 
 $options = getopt('', ['email:', 'admin', 'json', 'name:']);
-$email = $options['email'] ?? ('api-test-'.time().'-'.bin2hex(random_bytes(4)).'@test.finolo.local');
+$email = $options['email'] ?? ('api-test-'.time().'-'.bin2hex(random_bytes(4)).'@test.example.com');
 $makeAdmin = array_key_exists('admin', $options);
 $name = $options['name'] ?? ('API '.explode('@', $email)[0]);
 $jsonMode = array_key_exists('json', $options);
+
+// ── CUSTOMIZE: module model namespaces ─────────────────────────────────────
+$userModel = getenv('USER_MODEL') ?: 'Modules\\User\\Models\\User';
+$globalRoleModel = getenv('GLOBAL_ROLE_MODEL') ?: 'Modules\\Project\\Models\\GlobalRole';
+$adminRoleName = getenv('ADMIN_ROLE_NAME') ?: 'Super Admin';
 
 $testKitRoot = dirname(__DIR__, 3);
 $projectRoot = getenv('PROJECT_ROOT') ?: null;
@@ -48,10 +50,9 @@ $app = require $projectRoot.'/bootstrap/app.php';
 $app->make(Illuminate\Contracts\Console\Kernel::class)->bootstrap();
 
 use Illuminate\Support\Facades\Hash;
-use Modules\Project\Models\GlobalRole;
-use Modules\User\Models\User;
 
-$user = User::firstOrCreate(
+/** @var \Illuminate\Database\Eloquent\Model $user */
+$user = $userModel::firstOrCreate(
     ['email' => $email],
     [
         'name' => $name,
@@ -66,7 +67,7 @@ if (! $user->email_verified_at) {
     $user->email_verified_at = now();
     $changed = true;
 }
-if (! $user->is_active) {
+if (isset($user->is_active) && ! $user->is_active) {
     $user->is_active = true;
     $changed = true;
 }
@@ -75,11 +76,13 @@ if ($changed) {
 }
 
 if ($makeAdmin || stripos($email, 'admin') !== false) {
-    $role = GlobalRole::firstOrCreate(
-        ['name' => 'Super Admin'],
-        ['description' => 'System super administrator', 'is_system_role' => true]
+    $role = $globalRoleModel::firstOrCreate(
+        ['name' => $adminRoleName],
+        ['description' => 'System administrator', 'is_system_role' => true]
     );
-    $user->systemRoles()->syncWithoutDetaching([$role->id]);
+    if (method_exists($user, 'systemRoles')) {
+        $user->systemRoles()->syncWithoutDetaching([$role->id]);
+    }
 }
 
 $token = $user->createToken('api-test')->plainTextToken;

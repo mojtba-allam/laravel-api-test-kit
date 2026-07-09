@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Finolo Archive Module API Test Suite - Enhanced
+# Archive Module API Test Suite - Enhanced
 # Phase 20: Comprehensive archive testing covering:
 #   - Archive/Restore endpoints on tasks and projects
 #   - Archive Records API (GET /archives, /archives/statistics, /archives/{id}, /archives/type/{type})

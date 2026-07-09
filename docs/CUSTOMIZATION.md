@@ -1,6 +1,6 @@
 # Customization Guide
 
-Use this guide when adapting the test kit from Finolo to **your** Laravel API.
+Use this guide when adapting the test kit to **your** Laravel API.
 
 ## Step 1: Auth adapter
 
@@ -133,7 +133,7 @@ print_summary_and_exit
 
 Register in `api/run-all-api-tests.sh` → `TEST_SCRIPTS` array.
 
-## Step 8: Remove Finolo-only suites
+## Step 8: Remove App-specific suites
 
 Delete or skip suites that don't apply:
 

@@ -1,5 +1,5 @@
 /**
- * k6 API Performance Test — Finolo
+ * k6 API Performance Test
  *
  * Tests all major API endpoints for response time and throughput.
  * Run: k6 run tests/performance/k6-api-load.js

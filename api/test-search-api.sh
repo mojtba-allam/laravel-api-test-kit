@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Finolo Search API Test Suite - Enhanced
+# Search API Test Suite - Enhanced
 # Phase 17: Comprehensive search testing with validation, DB verification, and business logic
 
 set -e

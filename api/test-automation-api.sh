@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Finolo Automation API Test Suite - Enhanced
+# Automation API Test Suite - Enhanced
 # Phase 19: Comprehensive automation testing with validation, DB verification, and business logic
 
 set -e

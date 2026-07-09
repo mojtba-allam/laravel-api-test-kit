@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Finolo Project Module API Test Suite - Enhanced
+# Project Module API Test Suite - Enhanced
 # Tests all Project endpoints with comprehensive validation
 
 set -e

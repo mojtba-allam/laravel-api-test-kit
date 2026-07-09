@@ -67,40 +67,40 @@ setup_policy_fixtures() {
     # ------------------------------------------------------------------
     echo "  [1/15] Logging in seeded users..."
 
-    ADMIN_TOKEN=$(login_as "${SEED_ADMIN_EMAIL:-admin@finolo.com}") || {
-        echo "ERROR: failed to log in ${SEED_ADMIN_EMAIL:-admin@finolo.com}" >&2; return 1
+    ADMIN_TOKEN=$(login_as "$SEED_ADMIN_EMAIL") || {
+        echo "ERROR: failed to log in $SEED_ADMIN_EMAIL" >&2; return 1
     }
-    login_as "${SEED_ADMIN_EMAIL:-admin@finolo.com}" > /dev/null 2>&1 || true
+    login_as "$SEED_ADMIN_EMAIL" > /dev/null 2>&1 || true
     ADMIN_USER_ID="$LAST_LOGIN_USER_ID"
 
-    OWNER_TOKEN=$(login_as "${SEED_OWNER_EMAIL:-user-01@finolo.com}") || {
-        echo "ERROR: failed to log in ${SEED_OWNER_EMAIL:-user-01@finolo.com}" >&2; return 1
+    OWNER_TOKEN=$(login_as "$SEED_OWNER_EMAIL") || {
+        echo "ERROR: failed to log in $SEED_OWNER_EMAIL" >&2; return 1
     }
-    login_as "${SEED_OWNER_EMAIL:-user-01@finolo.com}" > /dev/null 2>&1 || true
+    login_as "$SEED_OWNER_EMAIL" > /dev/null 2>&1 || true
     OWNER_USER_ID="$LAST_LOGIN_USER_ID"
 
-    CREATOR_TOKEN=$(login_as "${SEED_CREATOR_EMAIL:-user-02@finolo.com}") || {
-        echo "ERROR: failed to log in ${SEED_CREATOR_EMAIL:-user-02@finolo.com}" >&2; return 1
+    CREATOR_TOKEN=$(login_as "$SEED_CREATOR_EMAIL") || {
+        echo "ERROR: failed to log in $SEED_CREATOR_EMAIL" >&2; return 1
     }
-    login_as "${SEED_CREATOR_EMAIL:-user-02@finolo.com}" > /dev/null 2>&1 || true
+    login_as "$SEED_CREATOR_EMAIL" > /dev/null 2>&1 || true
     CREATOR_USER_ID="$LAST_LOGIN_USER_ID"
 
-    MEMBER_TOKEN=$(login_as "${SEED_MEMBER_EMAIL:-user-03@finolo.com}") || {
-        echo "ERROR: failed to log in ${SEED_MEMBER_EMAIL:-user-03@finolo.com}" >&2; return 1
+    MEMBER_TOKEN=$(login_as "$SEED_MEMBER_EMAIL") || {
+        echo "ERROR: failed to log in $SEED_MEMBER_EMAIL" >&2; return 1
     }
-    login_as "${SEED_MEMBER_EMAIL:-user-03@finolo.com}" > /dev/null 2>&1 || true
+    login_as "$SEED_MEMBER_EMAIL" > /dev/null 2>&1 || true
     MEMBER_USER_ID="$LAST_LOGIN_USER_ID"
 
-    AUTHOR_TOKEN=$(login_as "${SEED_AUTHOR_EMAIL:-user-04@finolo.com}") || {
-        echo "ERROR: failed to log in ${SEED_AUTHOR_EMAIL:-user-04@finolo.com}" >&2; return 1
+    AUTHOR_TOKEN=$(login_as "$SEED_AUTHOR_EMAIL") || {
+        echo "ERROR: failed to log in $SEED_AUTHOR_EMAIL" >&2; return 1
     }
-    login_as "${SEED_AUTHOR_EMAIL:-user-04@finolo.com}" > /dev/null 2>&1 || true
+    login_as "$SEED_AUTHOR_EMAIL" > /dev/null 2>&1 || true
     AUTHOR_USER_ID="$LAST_LOGIN_USER_ID"
 
-    OTHER_TOKEN=$(login_as "${SEED_OTHER_EMAIL:-user-05@finolo.com}") || {
-        echo "ERROR: failed to log in ${SEED_OTHER_EMAIL:-user-05@finolo.com}" >&2; return 1
+    OTHER_TOKEN=$(login_as "$SEED_OTHER_EMAIL") || {
+        echo "ERROR: failed to log in $SEED_OTHER_EMAIL" >&2; return 1
     }
-    login_as "${SEED_OTHER_EMAIL:-user-05@finolo.com}" > /dev/null 2>&1 || true
+    login_as "$SEED_OTHER_EMAIL" > /dev/null 2>&1 || true
     OTHER_USER_ID="$LAST_LOGIN_USER_ID"
 
     # ------------------------------------------------------------------

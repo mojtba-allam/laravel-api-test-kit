@@ -1,10 +1,20 @@
 import { test, expect } from '@playwright/test'
+import { execSync } from 'child_process'
+import { projectRoot, testConfig } from './support/config'
 
 const BASE_URL = process.env.PLAYWRIGHT_BASE_URL || 'http://127.0.0.1:8000'
 
+function readVerificationCode(email: string): string {
+  const model = testConfig.pendingRegistrationModel
+  return execSync(
+    `php artisan tinker --execute="echo ${model}::where('email','${email}')->value('verification_code');"`,
+    { cwd: projectRoot(), encoding: 'utf-8' },
+  ).trim()
+}
+
 test.describe('Email Verification Flow', () => {
   test('registration does NOT create a user until verification', async ({ request }) => {
-    const email = `e2e-pending-${Date.now()}@finolo.test`
+    const email = `e2e-pending-${Date.now()}@test.example.com`
     const password = 'StrongPass123!'
 
     // 1. Register
@@ -29,7 +39,7 @@ test.describe('Email Verification Flow', () => {
   })
 
   test('unverified pending registration cannot access protected pages', async ({ request }) => {
-    const email = `e2e-noauth-${Date.now()}@finolo.test`
+    const email = `e2e-noauth-${Date.now()}@test.example.com`
     const password = 'StrongPass123!'
 
     // Register — no auth token is returned
@@ -52,7 +62,7 @@ test.describe('Email Verification Flow', () => {
   })
 
   test('send-code endpoint sends verification email', async ({ request }) => {
-    const email = `e2e-sendcode-${Date.now()}@finolo.test`
+    const email = `e2e-sendcode-${Date.now()}@test.example.com`
     const password = 'StrongPass123!'
 
     const regResponse = await request.post(`${BASE_URL}/api/v1/auth/register`, {
@@ -75,8 +85,8 @@ test.describe('Email Verification Flow', () => {
   })
 
   test('change-email endpoint updates pending registration email', async ({ request }) => {
-    const email = `e2e-change-${Date.now()}@finolo.test`
-    const newEmail = `e2e-changed-${Date.now()}@finolo.test`
+    const email = `e2e-change-${Date.now()}@test.example.com`
+    const newEmail = `e2e-changed-${Date.now()}@test.example.com`
     const password = 'StrongPass123!'
 
     const regResponse = await request.post(`${BASE_URL}/api/v1/auth/register`, {
@@ -101,9 +111,9 @@ test.describe('Email Verification Flow', () => {
   })
 
   test('full verification flow creates user and returns auth token', async ({ request }) => {
-    test.skip(BASE_URL.includes('finolo.ir'), 'Requires local DB access to read verification code')
+    test.skip(!process.env.PROJECT_ROOT && !testConfig.projectRoot, 'Requires local DB access to read verification code')
 
-    const email = `e2e-fullverify-${Date.now()}@finolo.test`
+    const email = `e2e-fullverify-${Date.now()}@test.example.com`
     const password = 'StrongPass123!'
 
     // 1. Register
@@ -126,11 +136,7 @@ test.describe('Email Verification Flow', () => {
 
     // 3. Get the code from DB
     await new Promise((r) => setTimeout(r, 500))
-    const { execSync } = await import('child_process')
-    const code = execSync(
-      `cd /home/panda/Desktop/finolo && php artisan tinker --execute="echo Modules\\\\User\\\\Models\\\\PendingRegistration::where('email','${email}')->value('verification_code');"`,
-      { encoding: 'utf-8' },
-    ).trim()
+    const code = readVerificationCode(email)
     expect(code).toMatch(/^\d{6}$/)
 
     // 4. Verify
@@ -152,7 +158,7 @@ test.describe('Email Verification Flow', () => {
   })
 
   test('registration UI redirects to verify-email page without dashboard flash', async ({ page }) => {
-    const email = `e2e-ui-${Date.now()}@finolo.test`
+    const email = `e2e-ui-${Date.now()}@test.example.com`
     const password = 'StrongPass123!'
 
     await page.goto('/register')
@@ -172,7 +178,7 @@ test.describe('Email Verification Flow', () => {
   })
 
   test('verify-email page shows send code button (email not sent automatically)', async ({ page }) => {
-    const email = `e2e-sendbtn-${Date.now()}@finolo.test`
+    const email = `e2e-sendbtn-${Date.now()}@test.example.com`
     const password = 'StrongPass123!'
 
     await page.goto('/register')
@@ -195,7 +201,7 @@ test.describe('Email Verification Flow', () => {
   })
 
   test('verify-email page has change email button', async ({ page }) => {
-    const email = `e2e-changeemail-${Date.now()}@finolo.test`
+    const email = `e2e-changeemail-${Date.now()}@test.example.com`
     const password = 'StrongPass123!'
 
     await page.goto('/register')
@@ -220,7 +226,7 @@ test.describe('Email Verification Flow', () => {
   })
 
   test('back link goes to register page, not dashboard', async ({ page }) => {
-    const email = `e2e-backlink-${Date.now()}@finolo.test`
+    const email = `e2e-backlink-${Date.now()}@test.example.com`
     const password = 'StrongPass123!'
 
     await page.goto('/register')
@@ -291,7 +297,7 @@ test.describe('Signup UI Validation', () => {
 
   test('rejects password shorter than 8 characters', async ({ page }) => {
     await page.locator('[data-testid="register-name"]').fill('Test User')
-    await page.locator('[data-testid="register-email"]').fill(`short-${Date.now()}@finolo.test`)
+    await page.locator('[data-testid="register-email"]').fill(`short-${Date.now()}@test.example.com`)
     await page.locator('[data-testid="register-password"]').fill('short')
     await page.locator('[data-testid="register-confirm"]').fill('short')
     await page.locator('[data-testid="register-submit"]').click()
@@ -302,7 +308,7 @@ test.describe('Signup UI Validation', () => {
 
   test('rejects mismatched password confirmation', async ({ page }) => {
     await page.locator('[data-testid="register-name"]').fill('Test User')
-    await page.locator('[data-testid="register-email"]').fill(`mismatch-${Date.now()}@finolo.test`)
+    await page.locator('[data-testid="register-email"]').fill(`mismatch-${Date.now()}@test.example.com`)
     await page.locator('[data-testid="register-password"]').fill('StrongPass123!')
     await page.locator('[data-testid="register-confirm"]').fill('DifferentPass123!')
     await page.locator('[data-testid="register-submit"]').click()
@@ -320,7 +326,7 @@ test.describe('Signup UI Validation', () => {
   })
 
   test('rejects duplicate email registration', async ({ page, request }) => {
-    const email = `dup-${Date.now()}@finolo.test`
+    const email = `dup-${Date.now()}@test.example.com`
     const password = 'StrongPass123!'
 
     // First registration via API
@@ -342,11 +348,7 @@ test.describe('Signup UI Validation', () => {
     })
     await new Promise((r) => setTimeout(r, 500))
 
-    const { execSync } = await import('child_process')
-    const code = execSync(
-      `cd /home/panda/Desktop/finolo && php artisan tinker --execute="echo Modules\\\\User\\\\Models\\\\PendingRegistration::where('email','${email}')->value('verification_code');"`,
-      { encoding: 'utf-8' },
-    ).trim()
+    const code = readVerificationCode(email)
 
     await request.post(`${BASE_URL}/api/v1/auth/pending/verify`, {
       data: { pending_token: pendingToken, code },
@@ -370,7 +372,7 @@ test.describe('Signup UI Validation', () => {
   })
 
   test('successful signup shows verification page with email', async ({ page }) => {
-    const email = `verify-ui-${Date.now()}@finolo.test`
+    const email = `verify-ui-${Date.now()}@test.example.com`
     const password = 'StrongPass123!'
 
     await page.locator('[data-testid="register-name"]').fill('Verify UI User')

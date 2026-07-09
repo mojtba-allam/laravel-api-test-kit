@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Finolo Task Dependencies API Test Suite - Enhanced
+# Task Dependencies API Test Suite - Enhanced
 # Phase 6: Comprehensive dependency testing with validation, DB verification, and business logic
 
 set -e

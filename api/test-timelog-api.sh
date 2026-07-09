@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Finolo TimeLog API Test Suite - Enhanced
+# TimeLog API Test Suite - Enhanced
 # Phase 13: Comprehensive timelog testing with validation, DB verification, and business logic
 
 set -e

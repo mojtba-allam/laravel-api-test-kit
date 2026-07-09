@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Finolo Task Module API Test Suite - Enhanced
+# Task Module API Test Suite - Enhanced
 # Tests all Task endpoints with comprehensive validation
 
 set -e
