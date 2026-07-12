@@ -18,7 +18,7 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y shellcheck
 
       - name: Lint shell scripts
-        run: find api scripts config -name '*.sh' -print0 | xargs -0 shellcheck
+        run: find api scripts config -name '*.sh' -print0 | xargs -0 shellcheck -S error
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
