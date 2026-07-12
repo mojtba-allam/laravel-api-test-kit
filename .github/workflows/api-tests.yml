@@ -8,65 +8,30 @@ on:
   workflow_dispatch:
 
 jobs:
-  api-tests:
+  validate-kit:
     runs-on: ubuntu-latest
-
-    services:
-      mysql:
-        image: mysql:8.0
-        env:
-          MYSQL_ROOT_PASSWORD: password
-          MYSQL_DATABASE: testing
-        ports:
-          - 3306:3306
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Checkout Laravel app
-        uses: actions/checkout@v4
-        with:
-          repository: your-org/your-laravel-app
-          path: laravel-app
-          token: ${{ secrets.GH_PAT }}
+      - name: Install shellcheck
+        run: sudo apt-get update && sudo apt-get install -y shellcheck
+
+      - name: Lint shell scripts
+        run: find api scripts config -name '*.sh' -print0 | xargs -0 shellcheck
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.4'
-          extensions: mbstring, pdo_mysql
 
-      - name: Install Laravel dependencies
-        working-directory: laravel-app
-        run: composer install --no-interaction
+      - name: Syntax check PHP adapters
+        run: find scripts/adapters -name '*.php' -exec php -l {} \;
 
-      - name: Prepare Laravel
-        working-directory: laravel-app
+      - name: Verify test kit layout
         run: |
-          cp .env.example .env
-          php artisan key:generate
-          php artisan migrate --force
-          php artisan db:seed --force
-
-      - name: Configure test kit
-        run: |
-          cp config/test.env.example config/test.env
-          cat >> config/test.env <<EOF
-          PROJECT_ROOT=${{ github.workspace }}/laravel-app
-          BASE_URL=http://127.0.0.1:8000/api/v1
-          EOF
-
-      - name: Start Laravel server
-        working-directory: laravel-app
-        run: php artisan serve --host=127.0.0.1 --port=8000 &
-
-      - name: Wait for server
-        run: |
-          for i in $(seq 1 30); do
-            curl -sf http://127.0.0.1:8000 && break
-            sleep 1
-          done
-
-      - name: Run API test suite
-        run: ./api/run-all-api-tests.sh
+          test -f api/run-all-api-tests.sh
+          test -f api/api-test-helpers.sh
+          test -f config/test.env.example
+          test -f config/bootstrap.sh
+          test -x scripts/setup-project.sh
