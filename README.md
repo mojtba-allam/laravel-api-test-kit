@@ -12,6 +12,7 @@ Point `PROJECT_ROOT` at your app, customize an auth adapter, and run.
 | **Helpers** | `api/api-test-helpers.sh` | Auth, HTTP, JSON assertions, DB checks, fixtures |
 | **Workflow / chain** | `api/test-*-flow*.sh`, `api/test-integration-api.sh` | Multi-phase A→B→C scenarios |
 | **Policy matrix** | `api/test-policy-authorization-api.sh` | Role × resource × action coverage |
+| **Postman** | `postman/` | Generated collections, env, flows + MCP-friendly workflow |
 | **E2E (Playwright)** | `e2e/` | UI + API hybrid, invite flows, permissions |
 | **Performance** | `performance/k6-api-load.js` | Latency & throughput thresholds |
 | **Adapters** | `scripts/adapters/` | Project-specific token minting |
@@ -36,7 +37,12 @@ cd /path/to/laravel-api-test-kit
 ./scripts/setup-project.sh
 ./api/run-all-api-tests.sh
 
-# 4. Run E2E (optional)
+# 4. Generate Postman artifacts (optional)
+cp postman/config.example.php postman/config.php
+npm run postman:generate
+# Import postman/collections, environments, flows — see docs/POSTMAN.md
+
+# 5. Run E2E (optional)
 npm install
 npx playwright install chromium
 npx playwright test
@@ -48,6 +54,10 @@ npx playwright test
 - [Customization Guide](docs/CUSTOMIZATION.md) — adapt suites to your API routes & models
 - [Helpers Reference](docs/HELPERS.md) — `api-test-helpers.sh` functions
 - [Workflow Tests (A→B→C)](docs/WORKFLOWS.md) — multi-step chain patterns
+- [Postman kit](docs/POSTMAN.md) — generate collections, env, flows; happy/negative tests
+- [Postman customization](docs/POSTMAN_CUSTOMIZATION.md) — retarget for a new Laravel API
+- [Postman MCP](docs/POSTMAN_MCP.md) — sync workspaces via Postman MCP
+- [JSON contract](docs/POSTMAN_JSON_CONTRACT.md) — success/error shapes for assertions
 - [E2E Testing](docs/E2E.md) — Playwright setup & auth strategies
 - [Performance](docs/PERFORMANCE.md) — k6 load tests
 - [Best Practices](docs/BEST_PRACTICES.md) — speed, seeders, real data, CI
@@ -68,6 +78,13 @@ laravel-api-test-kit/
 │   ├── api-test-helpers.sh # shared library (source this)
 │   ├── run-all-api-tests.sh
 │   └── test-*.sh
+├── postman/                # Postman generator + scripts + outputs
+│   ├── config.example.php
+│   ├── generate-collections.php
+│   ├── scripts/
+│   ├── collections/        # generated (api.json)
+│   ├── environments/       # generated
+│   └── flows/              # generated
 ├── config/
 │   ├── bootstrap.sh        # loads test.env
 │   └── test.env.example

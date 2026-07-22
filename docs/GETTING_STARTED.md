@@ -90,6 +90,15 @@ npx playwright test
 k6 run performance/k6-api-load.js
 ```
 
+**Postman (generate + import):**
+
+```bash
+cp postman/config.example.php postman/config.php
+npm run postman:generate
+# Import postman/collections/api.json + environments + flows
+# See docs/POSTMAN.md and docs/POSTMAN_MCP.md
+```
+
 ## Environment variables reference
 
 All values can live in `config/test.env`:

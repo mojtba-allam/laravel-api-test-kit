@@ -104,14 +104,17 @@ scripts/adapters/        ← project-specific auth
 
 When adding endpoints to your app, extend the matching `test-*.sh` — don't create overlapping files.
 
+Mirror the same modules in `postman/config.php` so interactive Postman coverage stays aligned with CI curl suites ([POSTMAN.md](POSTMAN.md)).
+
 ## 11. CI pipeline order
 
 ```
 1. migrate + seed
 2. start server (or use deployed staging)
 3. API suites (fast, high signal)
-4. E2E (slower, UI coverage)
-5. k6 (nightly / pre-release)
+4. Optional: Newman against generated Postman collection
+5. E2E (slower, UI coverage)
+6. k6 (nightly / pre-release)
 ```
 
 ## 12. Failure investigation
@@ -129,6 +132,8 @@ PLAYWRIGHT_TRACE=on npx playwright test --last-failed
 npx playwright show-report
 ```
 
+Postman / Newman failure: open the failed request’s **Test** results and compare status + JSON envelope to [POSTMAN_JSON_CONTRACT.md](POSTMAN_JSON_CONTRACT.md).
+
 ## 13. Adapting checklist for new projects
 
 - [ ] `config/test.env` with `PROJECT_ROOT`
@@ -139,3 +144,5 @@ npx playwright show-report
 - [ ] Trim irrelevant suites from `run-all-api-tests.sh`
 - [ ] Update E2E login selectors and home URL
 - [ ] Add your modules as new `test-*.sh` files
+- [ ] `postman/config.php` with happy + negative requests and at least one flow
+- [ ] `npm run postman:generate` and Collection Runner smoke

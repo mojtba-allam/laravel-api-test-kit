@@ -1,0 +1,31 @@
+{
+    "id": "c8d2b1b6-4015-4399-afdf-b294adce718d",
+    "name": "Local",
+    "values": [
+        {
+            "key": "base_url",
+            "value": "http://127.0.0.1:8000",
+            "type": "default",
+            "enabled": true
+        },
+        {
+            "key": "access_token",
+            "value": "",
+            "type": "secret",
+            "enabled": true
+        },
+        {
+            "key": "resource_id",
+            "value": "",
+            "type": "default",
+            "enabled": true
+        },
+        {
+            "key": "unique_suffix",
+            "value": "",
+            "type": "default",
+            "enabled": true
+        }
+    ],
+    "_postman_variable_scope": "environment"
+}

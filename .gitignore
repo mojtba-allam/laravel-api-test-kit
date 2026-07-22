@@ -1,6 +1,9 @@
 # Local config (contains PROJECT_ROOT — do not commit secrets)
 config/test.env
 
+# Project-local Postman config may contain mint credentials
+postman/config.php
+
 # Dependencies & artifacts
 node_modules/
 test-results/

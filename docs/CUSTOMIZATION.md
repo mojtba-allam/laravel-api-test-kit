@@ -143,6 +143,16 @@ Delete or skip suites that don't apply:
 
 Comment them out in `run-all-api-tests.sh`.
 
+## Step 9: Postman collections
+
+```bash
+cp postman/config.example.php postman/config.php
+# Map modules/routes/bodies to the same API as your shell suites
+npm run postman:generate
+```
+
+Details: [POSTMAN_CUSTOMIZATION.md](POSTMAN_CUSTOMIZATION.md), [POSTMAN.md](POSTMAN.md).
+
 ## Adapting for non-Laravel apps
 
 The shell helpers (`api_json`, `assert_api`, JSON assertions) work with any JSON HTTP API. Replace:

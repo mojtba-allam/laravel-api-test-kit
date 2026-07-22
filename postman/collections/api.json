@@ -1,0 +1,518 @@
+{
+    "info": {
+        "_postman_id": "b654d34f-51f9-4929-acdc-5c3194d1886e",
+        "name": "Laravel API",
+        "description": "Generated API regression collection.\n\nFolders: Public / Setup / Protected / Flows.\nEach request documents one action and asserts status (and optional JSON keys).",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "variable": [
+        {
+            "key": "base_url",
+            "value": "http://127.0.0.1:8000"
+        }
+    ],
+    "event": [
+        {
+            "listen": "prerequest",
+            "script": {
+                "type": "text/javascript",
+                "exec": [
+                    "/**",
+                    " * Collection-level prerequest \u2014 runs before every request.",
+                    " * Keep this generic; put project-specific logic in postman/config.php bodies",
+                    " * or per-request scripts after you customize the generator.",
+                    " */",
+                    "const baseUrl = pm.environment.get('base_url') || pm.collectionVariables.get('base_url');",
+                    "if (!baseUrl) {",
+                    "    console.warn('base_url is not set \u2014 select a Postman environment before running.');",
+                    "}",
+                    "",
+                    "// Stable unique suffix for one Collection Runner / folder run.",
+                    "if (!pm.environment.get('unique_suffix')) {",
+                    "    pm.environment.set('unique_suffix', String(Date.now()).slice(-8) + String(Math.floor(Math.random() * 90 + 10)));",
+                    "}"
+                ]
+            }
+        },
+        {
+            "listen": "test",
+            "script": {
+                "type": "text/javascript",
+                "exec": [
+                    "/**",
+                    " * Collection-level contract tests for Laravel JSON APIs.",
+                    " *",
+                    " * Skips when the request sets header: X-Skip-Contract: 1",
+                    " * (use for HTML health pages, file downloads, empty 204s, etc.)",
+                    " *",
+                    " * Expected error envelope (adjust in docs/POSTMAN_JSON_CONTRACT.md if your",
+                    " * API differs, then edit this script to match):",
+                    " *   { \"error\": \"...\", \"message\": \"...\", \"errors\"?: { field: [...] } }",
+                    " */",
+                    "const skip = pm.request.headers.has('X-Skip-Contract');",
+                    "if (skip) {",
+                    "    return;",
+                    "}",
+                    "",
+                    "const code = pm.response.code;",
+                    "const ct = pm.response.headers.get('Content-Type') || '';",
+                    "const text = pm.response.text();",
+                    "",
+                    "pm.test('Response is JSON when body present', function () {",
+                    "    if (code === 204 || text.length === 0) {",
+                    "        return;",
+                    "    }",
+                    "    pm.expect(ct).to.match(/json/i);",
+                    "    pm.response.json();",
+                    "});",
+                    "",
+                    "if (code >= 400 && text.length > 0) {",
+                    "    const json = pm.response.json();",
+                    "    pm.test('Error envelope has message (and error or errors)', function () {",
+                    "        pm.expect(json).to.have.property('message');",
+                    "        const hasError = Object.prototype.hasOwnProperty.call(json, 'error');",
+                    "        const hasErrors = Object.prototype.hasOwnProperty.call(json, 'errors');",
+                    "        pm.expect(hasError || hasErrors).to.eql(true);",
+                    "    });",
+                    "}"
+                ]
+            }
+        }
+    ],
+    "item": [
+        {
+            "name": "Public",
+            "description": "Unauthenticated / public endpoints.",
+            "item": [
+                {
+                    "name": "Health",
+                    "description": "",
+                    "item": [
+                        {
+                            "name": "Happy Path",
+                            "item": [
+                                {
+                                    "name": "GET health",
+                                    "request": {
+                                        "method": "GET",
+                                        "header": [
+                                            {
+                                                "key": "Accept",
+                                                "value": "application/json"
+                                            },
+                                            {
+                                                "key": "X-Skip-Contract",
+                                                "value": "1"
+                                            }
+                                        ],
+                                        "url": {
+                                            "raw": "{{base_url}}/up",
+                                            "host": [
+                                                "{{base_url}}"
+                                            ],
+                                            "path": [
+                                                "up"
+                                            ]
+                                        },
+                                        "description": "Health check.\n\n**Expect:** 200.",
+                                        "auth": {
+                                            "type": "noauth"
+                                        }
+                                    },
+                                    "event": [
+                                        {
+                                            "listen": "test",
+                                            "script": {
+                                                "type": "text/javascript",
+                                                "exec": [
+                                                    "pm.test(\"Expected HTTP status\", function () {",
+                                                    "    pm.response.to.have.status(200);",
+                                                    "});"
+                                                ]
+                                            }
+                                        }
+                                    ],
+                                    "response": []
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Protected",
+            "description": "Authenticated endpoints. Set access_token (or run Setup first).",
+            "item": [
+                {
+                    "name": "Resources",
+                    "description": "",
+                    "item": [
+                        {
+                            "name": "Happy Path",
+                            "item": [
+                                {
+                                    "name": "POST resources",
+                                    "request": {
+                                        "method": "POST",
+                                        "header": [
+                                            {
+                                                "key": "Accept",
+                                                "value": "application/json"
+                                            },
+                                            {
+                                                "key": "Authorization",
+                                                "value": "Bearer {{access_token}}"
+                                            },
+                                            {
+                                                "key": "Content-Type",
+                                                "value": "application/json"
+                                            }
+                                        ],
+                                        "url": {
+                                            "raw": "{{base_url}}/api/v1/resources",
+                                            "host": [
+                                                "{{base_url}}"
+                                            ],
+                                            "path": [
+                                                "api",
+                                                "v1",
+                                                "resources"
+                                            ]
+                                        },
+                                        "description": "Create a resource.\n\n**Expect:** 201 + `id`.",
+                                        "auth": {
+                                            "type": "noauth"
+                                        },
+                                        "body": {
+                                            "mode": "raw",
+                                            "raw": "{\n    \"name\": \"Resource-{{unique_suffix}}\",\n    \"description\": \"Created by Postman generator\"\n}",
+                                            "options": {
+                                                "raw": {
+                                                    "language": "json"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "event": [
+                                        {
+                                            "listen": "test",
+                                            "script": {
+                                                "type": "text/javascript",
+                                                "exec": [
+                                                    "pm.test(\"Expected HTTP status\", function () {",
+                                                    "    pm.response.to.have.status(201);",
+                                                    "});",
+                                                    "pm.test(\"Response JSON fields\", function () {",
+                                                    "const json = pm.response.json();",
+                                                    "pm.expect(json).to.have.property('id');",
+                                                    "pm.expect(json).to.have.property('name');",
+                                                    "});",
+                                                    "if (pm.response.code >= 200 && pm.response.code < 300) {",
+                                                    "    const json = pm.response.json();",
+                                                    "    if (json?.['id'] !== undefined && json?.['id'] !== null) {",
+                                                    "        pm.environment.set('resource_id', String(json?.['id']));",
+                                                    "    }",
+                                                    "}"
+                                                ]
+                                            }
+                                        }
+                                    ],
+                                    "response": []
+                                },
+                                {
+                                    "name": "GET resources/{id}",
+                                    "request": {
+                                        "method": "GET",
+                                        "header": [
+                                            {
+                                                "key": "Accept",
+                                                "value": "application/json"
+                                            },
+                                            {
+                                                "key": "Authorization",
+                                                "value": "Bearer {{access_token}}"
+                                            }
+                                        ],
+                                        "url": {
+                                            "raw": "{{base_url}}/api/v1/resources/{{resource_id}}",
+                                            "host": [
+                                                "{{base_url}}"
+                                            ],
+                                            "path": [
+                                                "api",
+                                                "v1",
+                                                "resources",
+                                                "{{resource_id}}"
+                                            ]
+                                        },
+                                        "description": "Fetch one resource.\n\n**Expect:** 200.",
+                                        "auth": {
+                                            "type": "noauth"
+                                        }
+                                    },
+                                    "event": [
+                                        {
+                                            "listen": "test",
+                                            "script": {
+                                                "type": "text/javascript",
+                                                "exec": [
+                                                    "pm.test(\"Expected HTTP status\", function () {",
+                                                    "    pm.response.to.have.status(200);",
+                                                    "});",
+                                                    "pm.test(\"Response JSON fields\", function () {",
+                                                    "const json = pm.response.json();",
+                                                    "pm.expect(json).to.have.property('id');",
+                                                    "pm.expect(json).to.have.property('name');",
+                                                    "});"
+                                                ]
+                                            }
+                                        }
+                                    ],
+                                    "response": []
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Negative Tests",
+                            "item": [
+                                {
+                                    "name": "POST resources [missing name]",
+                                    "request": {
+                                        "method": "POST",
+                                        "header": [
+                                            {
+                                                "key": "Accept",
+                                                "value": "application/json"
+                                            },
+                                            {
+                                                "key": "Authorization",
+                                                "value": "Bearer {{access_token}}"
+                                            },
+                                            {
+                                                "key": "Content-Type",
+                                                "value": "application/json"
+                                            }
+                                        ],
+                                        "url": {
+                                            "raw": "{{base_url}}/api/v1/resources",
+                                            "host": [
+                                                "{{base_url}}"
+                                            ],
+                                            "path": [
+                                                "api",
+                                                "v1",
+                                                "resources"
+                                            ]
+                                        },
+                                        "description": "Validation failure.\n\n**Expect:** 422 with error envelope.",
+                                        "auth": {
+                                            "type": "noauth"
+                                        },
+                                        "body": {
+                                            "mode": "raw",
+                                            "raw": "{\n    \"description\": \"missing required name\"\n}",
+                                            "options": {
+                                                "raw": {
+                                                    "language": "json"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "event": [
+                                        {
+                                            "listen": "test",
+                                            "script": {
+                                                "type": "text/javascript",
+                                                "exec": [
+                                                    "pm.test(\"Expected HTTP status\", function () {",
+                                                    "    pm.response.to.have.status(422);",
+                                                    "});"
+                                                ]
+                                            }
+                                        }
+                                    ],
+                                    "response": []
+                                },
+                                {
+                                    "name": "GET resources/{id} [unauthenticated]",
+                                    "request": {
+                                        "method": "GET",
+                                        "header": [
+                                            {
+                                                "key": "Accept",
+                                                "value": "application/json"
+                                            }
+                                        ],
+                                        "url": {
+                                            "raw": "{{base_url}}/api/v1/resources/{{resource_id}}",
+                                            "host": [
+                                                "{{base_url}}"
+                                            ],
+                                            "path": [
+                                                "api",
+                                                "v1",
+                                                "resources",
+                                                "{{resource_id}}"
+                                            ]
+                                        },
+                                        "description": "Auth boundary.\n\n**Expect:** 401.",
+                                        "auth": {
+                                            "type": "noauth"
+                                        }
+                                    },
+                                    "event": [
+                                        {
+                                            "listen": "test",
+                                            "script": {
+                                                "type": "text/javascript",
+                                                "exec": [
+                                                    "pm.test(\"Expected HTTP status\", function () {",
+                                                    "    pm.response.to.have.status(401);",
+                                                    "});"
+                                                ]
+                                            }
+                                        }
+                                    ],
+                                    "response": []
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Flows",
+            "description": "Multi-step sequences. Run one folder in Collection Runner.",
+            "item": [
+                {
+                    "name": "Flow \u2014 Resource create then fetch",
+                    "description": "Happy-path CRUD chain.\n\nRun with Collection Runner + Local environment.",
+                    "item": [
+                        {
+                            "name": "POST resources",
+                            "request": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "key": "Authorization",
+                                        "value": "Bearer {{access_token}}"
+                                    },
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{base_url}}/api/v1/resources",
+                                    "host": [
+                                        "{{base_url}}"
+                                    ],
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "resources"
+                                    ]
+                                },
+                                "description": "Create a resource.\n\n**Expect:** 201 + `id`.",
+                                "auth": {
+                                    "type": "noauth"
+                                },
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"name\": \"Resource-{{unique_suffix}}\",\n    \"description\": \"Created by Postman generator\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "event": [
+                                {
+                                    "listen": "test",
+                                    "script": {
+                                        "type": "text/javascript",
+                                        "exec": [
+                                            "pm.test(\"Expected HTTP status\", function () {",
+                                            "    pm.response.to.have.status(201);",
+                                            "});",
+                                            "pm.test(\"Response JSON fields\", function () {",
+                                            "const json = pm.response.json();",
+                                            "pm.expect(json).to.have.property('id');",
+                                            "pm.expect(json).to.have.property('name');",
+                                            "});",
+                                            "if (pm.response.code >= 200 && pm.response.code < 300) {",
+                                            "    const json = pm.response.json();",
+                                            "    if (json?.['id'] !== undefined && json?.['id'] !== null) {",
+                                            "        pm.environment.set('resource_id', String(json?.['id']));",
+                                            "    }",
+                                            "}"
+                                        ]
+                                    }
+                                }
+                            ],
+                            "response": []
+                        },
+                        {
+                            "name": "GET resources/{id}",
+                            "request": {
+                                "method": "GET",
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "key": "Authorization",
+                                        "value": "Bearer {{access_token}}"
+                                    }
+                                ],
+                                "url": {
+                                    "raw": "{{base_url}}/api/v1/resources/{{resource_id}}",
+                                    "host": [
+                                        "{{base_url}}"
+                                    ],
+                                    "path": [
+                                        "api",
+                                        "v1",
+                                        "resources",
+                                        "{{resource_id}}"
+                                    ]
+                                },
+                                "description": "Fetch one resource.\n\n**Expect:** 200.",
+                                "auth": {
+                                    "type": "noauth"
+                                }
+                            },
+                            "event": [
+                                {
+                                    "listen": "test",
+                                    "script": {
+                                        "type": "text/javascript",
+                                        "exec": [
+                                            "pm.test(\"Expected HTTP status\", function () {",
+                                            "    pm.response.to.have.status(200);",
+                                            "});",
+                                            "pm.test(\"Response JSON fields\", function () {",
+                                            "const json = pm.response.json();",
+                                            "pm.expect(json).to.have.property('id');",
+                                            "pm.expect(json).to.have.property('name');",
+                                            "});"
+                                        ]
+                                    }
+                                }
+                            ],
+                            "response": []
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

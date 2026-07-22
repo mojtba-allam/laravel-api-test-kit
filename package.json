@@ -7,6 +7,9 @@
     "setup": "bash scripts/setup-project.sh",
     "test:api": "bash api/run-all-api-tests.sh",
     "test:api:workspace": "bash api/test-workspace-api.sh",
+    "postman:generate": "php postman/generate-collections.php",
+    "postman:newman": "newman run postman/collections/api.json -e postman/environments/local.environment.json",
+    "postman:newman:flows": "newman run postman/collections/api.json -e postman/environments/local.environment.json --folder Flows",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
     "test:perf": "k6 run performance/k6-api-load.js"
